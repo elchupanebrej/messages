@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- Added Python implementation ([#165](https://github.com/cucumber/messages/pull/165))
 
 ## [24.0.1] - 2023-12-21
 ### Fixed
