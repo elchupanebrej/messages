@@ -65,3 +65,8 @@ warn_unused_configs = true
 ignore_missing_imports = true
 module = [
 ]
+
+[project.optional-dependencies]
+test = [
+  "tox"
+]
