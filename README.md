@@ -30,10 +30,9 @@ Each message in a message stream is of type [Envelope](messages.md#envelope).
 ## Language implementations
 
 Each subdirectory defines language-specific implementations of these messages,
-generated from the JSON schemas. The current implementation are:
-- .Net
+generated from the JSON schemas. The current implementations are:
 - C++
-- Elixir
+- .NET
 - Go
 - Java
 - Javascript
@@ -41,12 +40,18 @@ generated from the JSON schemas. The current implementation are:
 - PHP
 - Ruby
 
+There is also 1 subdirectory for Elixir which contains the legacy implementation which was largely
+driven by protobuf. This is currently not implemented or tested / integrated into our CI and will
+require the process of porting over to the JSON schema protocol.
+
+- Elixir
+
 ## Message emitters
 Cucumber Messages are currently sent by the following versions of Cucumber (using the `message` formatter):
 
-* Cucumber-JVM 6.0.0 and greater
-* Cucumber-Ruby 4.0.0 and greater
-* Cucumber.js 7.0.0 and greater
+* Cucumber-JVM `6.0.0` and later
+* Cucumber-Ruby `4.0.0` and later
+* Cucumber.js `7.0.0` and later
 
 Messages emitters for the other Cucumber languages (e.g. Perl) are not yet implemented. 
 
@@ -56,8 +61,8 @@ Cucumber needs to produce results in a machine-readable format so that other too
 
 ![messages-stream.svg](messages-stream.svg)
 
-Historically, Cucumber has done this with the `json` and `junit` formatters.
-These formats have several shortcomings that are addressed by Cucumber Messages.
+Historically, Cucumber did this with the `json` and `junit` formatters.
+These formats however, have several shortcomings that are now addressed by using Cucumber Messages.
 
 The `json` formatter is now in maintenance mode for these implementations, and Messages is the preferred standard.
 See [utilities](#utilities) for a list of tools that may help with backward and forward compatibility
@@ -78,15 +83,14 @@ of results.
 
 ### Lack of a schema
 
-The JSON report does not have a formal schema. This has led to slightly inconsistent implementations
+The JSON reporter does not have a formal schema. This has led to slightly inconsistent implementations
 of the JSON formatter in various Cucumber implementations. Consumers of the JSON format have
 to anticipate and detect these inconsistencies and try to cope with them.
 
 ### Limited information
 
 The `junit` XML format can only contain very limited information such as test case name and status.
-While there isn't an official schema for JUnit XML, there are a few defacto ones around, and they
-are very limited.
+While there isn't an official schema for JUnit XML, there are a few defacto ones around which are very limited.
 
 The `json` format represents the following information:
 

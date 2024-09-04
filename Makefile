@@ -24,7 +24,7 @@ schemas = \
 	./jsonschema/UndefinedParameterType.json \
 	./jsonschema/Envelope.json
 
-languages = cpp go java javascript perl php ruby
+languages = cpp go java javascript perl php ruby dotnet
 
 .DEFAULT_GOAL = help
 
@@ -41,7 +41,7 @@ generate-doc: require-doc messages.md ## Generate markdown documentation using t
 
 validate: $(schemas) ## Validate the json schemas are valid
 	npm install
-	npx ajv compile --data --spec=draft2020 --strict=true $(patsubst %,-s %,$(schemas))
+	node validate.cjs $(patsubst %, %,$(schemas))
 .PHONY: validate-schemas
 
 require-doc: ## Check requirements for the generation of the documentation (ruby is required)
@@ -53,9 +53,9 @@ clean-doc: ## Remove automatically generated documentation files and related art
 clean-all: clean-doc $(patsubst %,clean-%,$(languages)) ## Clean generated documentation and code of all supported languages
 .PHONY: clean-all
 
-messages.md: $(schemas) ./jsonschema/scripts/codegen.rb ./jsonschema/scripts/templates/markdown.md.erb ./jsonschema/scripts/templates/markdown.enum.md.erb
-	ruby ./jsonschema/scripts/codegen.rb Markdown ./jsonschema markdown.md.erb > $@
-	ruby ./jsonschema/scripts/codegen.rb Markdown ./jsonschema markdown.enum.md.erb >> $@
+messages.md: $(schemas) ./codegen/codegen.rb ./codegen/templates/markdown.md.erb ./codegen/templates/markdown.enum.md.erb
+	ruby ./codegen/codegen.rb Generator::Markdown markdown.md.erb > $@
+	ruby ./codegen/codegen.rb Generator::Markdown markdown.enum.md.erb >> $@
 
 generate-%: %
 	cd $< && make generate
